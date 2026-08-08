@@ -81,7 +81,7 @@ jobs:
             --no-progress
             --include-fragments
             --exclude-path Screenshots
-            README.md ARCHITECTURE.md SECURITY.md CONTRIBUTING.md Report/Report.md
+            README.md ARCHITECTURE.md LESSONS.md SECURITY.md CONTRIBUTING.md Report/Report.md
           fail: true
 
       - name: Reject github.com blob URLs in image tags

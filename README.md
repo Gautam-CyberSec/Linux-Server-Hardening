@@ -12,6 +12,7 @@ SSH · firewall · accounts · automatic updates — audited by default, applied
 [![License](https://img.shields.io/badge/code-MIT-blue?style=flat-square)](LICENSE)
 
 [Architecture](ARCHITECTURE.md) ·
+[Lessons learned](LESSONS.md) ·
 [Security](SECURITY.md) ·
 [Original lab report](Report/Report.md) ·
 [Contributing](CONTRIBUTING.md)
@@ -198,6 +199,15 @@ transmits anything off the host. Details and the reporting route:
 - [ ] Optional CIS Benchmark mapping for each control
 - [ ] JSON output mode for fleet-wide reporting
 - [ ] AppArmor profile status reporting
+
+## Engineering decisions &amp; lessons learned
+
+Six mistakes made while turning the manual lab into a tested script — including
+bash syntax the development machine did not support, a `NO_COLOR` flag that
+printed twelve errors while failing to disable colour, and a test that reported
+a working safety guard as broken.
+
+**[Read the retrospective →](LESSONS.md)**
 
 ## Licence
 
