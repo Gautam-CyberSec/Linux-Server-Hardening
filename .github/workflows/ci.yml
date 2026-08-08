@@ -16,7 +16,7 @@ jobs:
     name: shellcheck · shfmt
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: shellcheck
         run: |
@@ -26,7 +26,7 @@ jobs:
           shellcheck -x harden.sh lib/*.sh tests/*.sh
 
       - name: shfmt
-        uses: mfinelli/setup-shfmt@v3
+        uses: mfinelli/setup-shfmt@v4
         with:
           shfmt-version: 3.13.1
 
@@ -36,7 +36,7 @@ jobs:
     name: unit tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Run unit tests
         run: bash tests/test_sshd_config.sh
 
@@ -46,7 +46,7 @@ jobs:
     # macOS still ships bash 3.2. Running the suite there stops bash-4-only
     # syntax creeping back into code a contributor may need to run locally.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: bash --version | head -1
       - run: bash tests/test_sshd_config.sh
 
@@ -54,7 +54,7 @@ jobs:
     name: integration (Ubuntu 24.04 container)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build the test image
         run: docker build -f tests/Dockerfile -t hardening-test .
@@ -69,7 +69,7 @@ jobs:
     name: markdown links
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Every image in this repository was broken for months because it used a
       # github.com/blob/ URL, which serves HTML rather than the image. This job
