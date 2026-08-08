@@ -35,6 +35,51 @@ cd Linux-Server-Hardening
 ./harden.sh audit          # read-only, safe on a production box
 ```
 
+Auditing a host that has never been hardened:
+
+```console
+$ ./harden.sh audit
+
+SSH
+  → PermitRootLogin is yes, should be no
+  → PermitEmptyPasswords is unset, should be no
+  → X11Forwarding is yes, should be no
+  → MaxAuthTries is unset, should be 3
+  → LoginGraceTime is unset, should be 30
+  → PasswordAuthentication is enabled
+  ! refusing to disable it: no authorised key found for any sudo user
+  · add a key first, or re-run with --allow-password-lockout if you
+  · have console access and accept the risk
+
+Summary
+  6 control(s) unmet. Re-run as: sudo ./harden.sh apply
+```
+
+Then applying it, once a key is in place:
+
+```console
+$ sudo ./harden.sh apply --only ssh
+harden.sh 1.0.0  ·  ubuntu 24.04  ·  mode: apply
+
+SSH
+  → PermitRootLogin is yes, should be no
+  · backed up /etc/ssh/sshd_config → /etc/ssh/sshd_config.bak-20260808-165613
+  ✓ PermitRootLogin → no
+  ✓ PermitEmptyPasswords → no
+  ✓ X11Forwarding → no
+  ✓ MaxAuthTries → 3
+  ✓ LoginGraceTime → 30
+  ✓ PasswordAuthentication → no (key verified for 'deploy')
+  ✓ sshd validated the new configuration
+
+Summary
+  6 change(s) applied, 6 finding(s) seen.
+  ! verify you can open a NEW ssh session before closing this one
+```
+
+Backup, then change, then validation — and it names the key holder it verified
+before touching password authentication.
+
 ## What it checks
 
 ```mermaid
