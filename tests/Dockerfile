@@ -12,6 +12,9 @@ RUN apt-get update -qq \
         ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
+# sshd -t will not run without this; /run is tmpfs so the test recreates it too.
+RUN mkdir -p /run/sshd
+
 WORKDIR /opt/hardening
 COPY . .
 

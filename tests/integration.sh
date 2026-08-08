@@ -78,8 +78,15 @@ check "PermitRootLogin set to no" $?
 grep -qE '^PasswordAuthentication no$' "$WORK/sshd_config"
 check "PasswordAuthentication set to no" $?
 
-grep -q "authorised key present" <<<"$out"
-check "detected the authorised key for the sudo user" $?
+# control_ssh reports the holder it verified. The "authorised key present"
+# line belongs to control_accounts, which --only ssh does not run.
+grep -q "key verified for 'deploy'" <<<"$out"
+check "verified the sudo user's key before disabling password auth" $?
+
+# sshd -t refuses to run without its privilege separation directory. It exists
+# on a real host; a container has to create it, and its absence is an artefact
+# of the test environment rather than anything wrong with the config.
+mkdir -p /run/sshd
 
 # The point of the whole exercise: does the real daemon accept what we wrote?
 sshd -t -f "$WORK/sshd_config" 2>"$WORK/err"
