@@ -9,6 +9,7 @@ SSH · firewall · accounts · automatic updates — audited by default, applied
 [![CI](https://github.com/Gautam-CyberSec/Linux-Server-Hardening/actions/workflows/ci.yml/badge.svg)](https://github.com/Gautam-CyberSec/Linux-Server-Hardening/actions/workflows/ci.yml)
 [![Bash](https://img.shields.io/badge/bash-3.2%2B-4EAA25?style=flat-square&logo=gnubash&logoColor=white)](harden.sh)
 [![shellcheck](https://img.shields.io/badge/shellcheck-0%20findings-2ea44f?style=flat-square)](.github/workflows/ci.yml)
+[![Trivy](https://img.shields.io/badge/trivy-0%20HIGH%2FCRITICAL-2ea44f?style=flat-square)](.github/workflows/ci.yml)
 [![License](https://img.shields.io/badge/code-MIT-blue?style=flat-square)](LICENSE)
 
 [Architecture](ARCHITECTURE.md) ·

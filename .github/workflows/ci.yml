@@ -86,8 +86,29 @@ jobs:
 
       - name: Reject github.com blob URLs in image tags
         run: |
-          if grep -rnE '(src="|\]\()https://github\.com/[^)"]*/blob/' --include='*.md' .; then
+          if grep -rnE '(src="|\]\()https://github\.com/[^)"]*/blob/' --include='*.md' --exclude-dir=node_modules .; then
             echo "::error::blob URLs serve text/html, not the image. Use a relative path."
             exit 1
           fi
           echo "no blob-style image URLs found"
+
+  scan:
+    name: security scan
+    runs-on: ubuntu-latest
+
+    # shellcheck reasons about shell correctness, not about what is committed.
+    # This repository ships 11 screenshots of real terminal sessions from a
+    # hardening lab, which is exactly the kind of material that can carry a key
+    # or a credential by accident.
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Trivy secret scan
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: secret
+          format: table
+          exit-code: "1"
+          severity: HIGH,CRITICAL

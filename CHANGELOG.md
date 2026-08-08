@@ -11,6 +11,21 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - CIS Benchmark mapping per control
 - JSON output for fleet reporting
 
+## [1.1.0] — 2026-08-09
+
+### Added
+- Trivy secret scanning in CI. shellcheck reasons about shell correctness, not
+  about what is committed, and this repository ships 11 screenshots of real
+  terminal sessions — exactly the material that can carry a credential by
+  accident.
+- `LESSONS.md` restructured into the standard five fields: Problem, Cause,
+  Discovery, Fix, Engineering Principle.
+
+### Changed
+- GitHub Actions updated to `checkout@v7` and `setup-tflint@v6`.
+- The blob-URL guard now excludes `node_modules`, matching the sibling
+  repositories.
+
 ## [1.0.0] — 2026-08-08
 
 The manual lab became an executable, tested baseline.
@@ -37,5 +52,6 @@ The manual lab became an executable, tested baseline.
   which serves `text/html`. None of them had ever rendered. Now relative paths.
 - An unterminated code fence and several typos in the original report.
 
-[Unreleased]: https://github.com/Gautam-CyberSec/Linux-Server-Hardening/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/Gautam-CyberSec/Linux-Server-Hardening/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/Gautam-CyberSec/Linux-Server-Hardening/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/Gautam-CyberSec/Linux-Server-Hardening/releases/tag/v1.0.0
