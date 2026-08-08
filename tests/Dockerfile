@@ -1,7 +1,7 @@
 # Integration target: a real Ubuntu with a real sshd, so the generated
 # configuration is validated by the daemon that would actually read it rather
 # than by a regex that agrees with itself.
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
