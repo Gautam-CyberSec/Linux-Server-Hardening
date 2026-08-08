@@ -1,5 +1,7 @@
 # Linux Server Hardening
 
+[![License](https://img.shields.io/badge/license-CC%20BY%204.0-blue?style=flat-square)](LICENSE)
+
 ## Objective
 Harden the Kali VM by disabling direct root SSH login, enforcing key-based SSH authentication for user, applying a basic firewall policy to block unused ports, and capture before/after state evidence.
 
@@ -11,7 +13,7 @@ Harden the Kali VM by disabling direct root SSH login, enforcing key-based SSH a
 
 ## Folder Content
 
-[Report](https://github.com/Gautam-CyberSec/Linux-Server-Hardening/blob/main/Report/Report.md)
+[Report](Report/Report.md)
 
 [Screenshots](https://github.com/Gautam-CyberSec/Linux-Server-Hardening/tree/main/Screenshots)
 
@@ -20,4 +22,6 @@ The Linux server was successfully hardened by creating a non-root sudo user, enf
 
 ## Contact
 
-For questions, please contact me at https://discord.gg/zZHyANFq
+**Gautam** — Cloud &amp; Backend Engineer
+
+[Portfolio](https://Gautam-cloud.com) · [LinkedIn](https://linkedin.com/in/gautam-cybersec) · [gautamdem@gmail.com](mailto:gautamdem@gmail.com)
