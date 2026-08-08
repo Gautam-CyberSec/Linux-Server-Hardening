@@ -1,0 +1,36 @@
+name: Bug report
+description: The script behaved differently from what the documentation says
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Redact hostnames, IP addresses and usernames before pasting output.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you expected, and what you got.
+    validations: { required: true }
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options: ["audit", "apply"]
+    validations: { required: true }
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: Run with NO_COLOR=1 and paste it here, redacted.
+      render: shell
+  - type: input
+    id: os
+    attributes:
+      label: Distribution
+      placeholder: "Ubuntu 24.04"
+    validations: { required: true }
+  - type: input
+    id: bash
+    attributes:
+      label: bash version
+      placeholder: "5.2.21"

@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Static analysis and a throwaway container. Nothing here touches a real server
+# and no credentials are configured.
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: shellcheck · shfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: shellcheck
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq shellcheck
+          shellcheck --version
+          shellcheck -x harden.sh lib/*.sh tests/*.sh
+
+      - name: shfmt
+        uses: mfinelli/setup-shfmt@v3
+        with:
+          shfmt-version: 3.13.1
+
+      - run: shfmt -i 4 -ci -d harden.sh lib/*.sh tests/*.sh
+
+  unit:
+    name: unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run unit tests
+        run: bash tests/test_sshd_config.sh
+
+  unit-bash3:
+    name: unit tests (bash 3.2)
+    runs-on: macos-latest
+    # macOS still ships bash 3.2. Running the suite there stops bash-4-only
+    # syntax creeping back into code a contributor may need to run locally.
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash --version | head -1
+      - run: bash tests/test_sshd_config.sh
+
+  integration:
+    name: integration (Ubuntu 24.04 container)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the test image
+        run: docker build -f tests/Dockerfile -t hardening-test .
+
+      # --privileged is deliberately NOT used: the tests must pass in an
+      # unprivileged container, which keeps them honest about what the script
+      # can verify without a real init system.
+      - name: Run integration tests
+        run: docker run --rm hardening-test
+
+  docs:
+    name: markdown links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Every image in this repository was broken for months because it used a
+      # github.com/blob/ URL, which serves HTML rather than the image. This job
+      # exists so that can never happen again unnoticed.
+      - name: Check links and images
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --include-fragments
+            --exclude-path Screenshots
+            README.md ARCHITECTURE.md SECURITY.md CONTRIBUTING.md Report/Report.md
+          fail: true
+
+      - name: Reject github.com blob URLs in image tags
+        run: |
+          if grep -rnE '(src="|\]\()https://github\.com/[^)"]*/blob/' --include='*.md' .; then
+            echo "::error::blob URLs serve text/html, not the image. Use a relative path."
+            exit 1
+          fi
+          echo "no blob-style image URLs found"

@@ -1,0 +1,12 @@
+# Backups the script writes next to any file it edits
+*.bak-*
+
+# Test scratch
+/tmp/
+*.tmp
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

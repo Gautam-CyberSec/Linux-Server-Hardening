@@ -1,0 +1,22 @@
+name: Feature request
+description: Suggest a control or capability
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve
+    validations: { required: true }
+  - type: dropdown
+    id: lockout
+    attributes:
+      label: Could this lock a user out of a server?
+      options:
+        - "No"
+        - "Yes — it will need a guard and a test"
+        - "Not sure"
+    validations: { required: true }
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
